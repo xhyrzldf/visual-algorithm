@@ -1,3 +1,5 @@
+package sample;
+
 import lombok.Getter;
 
 import javax.swing.*;
@@ -33,7 +35,7 @@ public final class AlgoFrame extends JFrame {
         //initial private AlgoCanvas
         AlgoCanvas canvas = new AlgoCanvas();
 
-        //initial AlgoFrame
+        //initial sample.AlgoFrame
         this.setContentPane(canvas);
         // sync layout
         pack();
@@ -42,13 +44,10 @@ public final class AlgoFrame extends JFrame {
         this.setVisible(true);
     }
 
-    public AlgoFrame(String title) {
-        this(title, 1024, 768);
-    }
-
 
     private Circle[] circles;
 
+    // FIXME: 2018/4/22 在这里可以设置自己的数据
     public void render(Circle[] circles) {
         this.circles = circles;
         //调用paintComponent 重新绘制图形，以达到动画的效果
@@ -83,7 +82,11 @@ public final class AlgoFrame extends JFrame {
             setStrokeWitdh(g2d, 1);
             setColor(g2d, Color.pink);
             for (Circle circle : circles) {
-                strokeCircle(g2d, circle.x, circle.y, circle.getR());
+                if (circle.isFilled) {
+                    fillCircle(g2d, circle.x, circle.y, circle.getR());
+                } else {
+                    strokeCircle(g2d, circle.x, circle.y, circle.getR());
+                }
             }
         }
 

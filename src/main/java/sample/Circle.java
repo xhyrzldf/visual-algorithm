@@ -1,6 +1,10 @@
+package sample;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.awt.*;
 
 /**
  * visual-algorithm.
@@ -16,6 +20,15 @@ public class Circle {
     private int r;
     public int vx;
     public int vy;
+    public boolean isFilled = false;
+
+    public Circle(int x, int y, int r, int vx, int vy) {
+        this.x = x;
+        this.y = y;
+        this.r = r;
+        this.vx = vx;
+        this.vy = vy;
+    }
 
     /**
      * 移动坐标,根据vx,vy进行移动
@@ -52,5 +65,16 @@ public class Circle {
             y = maxY - r;
             vy = -vy;
         }
+    }
+
+    /**
+     * 判断该点的坐标是否在圆内，（x - 圆心.x)^2 + (y - 圆心.y)^2 <= r^2 则判断在圆内
+     * 利用三角形的三边原理原理.
+     *
+     * @param point
+     * @return
+     */
+    public boolean contain(Point point) {
+        return (x - point.x) * (x - point.x) + (y - point.y) * (y - point.y) <= r * r;
     }
 }

@@ -1,6 +1,10 @@
+package sample;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 
@@ -41,7 +45,8 @@ public final class AlgoVisualizer {
         // start paint
         EventQueue.invokeLater(() -> {
             frame = new AlgoFrame("Welcome", sceneWidth, sceneHeight);
-            // add keyboardListener
+            //add  Listeners
+            frame.addMouseListener(new algoMouseListener());
             frame.addKeyListener(new AlgoKeyListener());
             // run animation
             CompletableFuture.runAsync(this::run);
@@ -58,7 +63,6 @@ public final class AlgoVisualizer {
             // wait 20 ms
             pause(20);
             // update circle position
-
             if (isAnimated) {
                 for (Circle circle : circles) {
                     circle.move(0, 0, frame.getCanvasWidth(), frame.getCanvasHeight());
@@ -71,16 +75,45 @@ public final class AlgoVisualizer {
      * 自定义键盘响应事件
      */
     private class AlgoKeyListener extends KeyAdapter {
+        /**
+         * 键盘释放
+         *
+         * @param event
+         */
         @Override
-        public void keyReleased(KeyEvent e) {
+        public void keyReleased(KeyEvent event) {
             // 如果用户按了空格,那么就切换动画绘制的状态 动画执行/暂停
-            if (e.getKeyChar() == ' ') {
+            if (event.getKeyChar() == ' ') {
                 isAnimated = !isAnimated;
             }
         }
     }
 
+    /**
+     * 自定义鼠标响应事件
+     */
+    private class algoMouseListener extends MouseAdapter {
+        /**
+         * 鼠标左键点击
+         *
+         * @param event
+         */
+        @Override
+        public void mousePressed(MouseEvent event) {
+            // sync point 同步鼠标坐标系
+            event.translatePoint(0,
+                    (int) ((-(frame.getBounds().height - frame.getCanvasHeight())) / 1.5));
 
+            for (Circle circle : circles) {
+                if (circle.contain(event.getPoint())) {
+                    circle.isFilled = !circle.isFilled;
+                }
+            }
+
+        }
+    }
+
+    /* 下面是入口 */
     public static void main(String[] args) {
 
         int sceneWidth = 800;
