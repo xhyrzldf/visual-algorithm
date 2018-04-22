@@ -18,15 +18,17 @@ import static util.AlgoVisHelper.pause;
  */
 public final class AlgoVisualizer {
 
+    // FIXME: 2018/4/22 创建自己的数据
     //画布里的圆形数组
     private Circle[] circles;
-    //画布
+    //画布 视图
     private AlgoFrame frame;
     //动画是否执行
     private boolean isAnimated = true;
 
     public AlgoVisualizer(int sceneWidth, int sceneHeight, int N) {
 
+        // FIXME: 2018/4/22 初始化数据
         //initial circles , N = the number of circles , R = radius
         int R = 50;
         circles = new Circle[N];
@@ -42,9 +44,11 @@ public final class AlgoVisualizer {
             circles[i] = new Circle(x, y, R, vx, vy);
         }
 
+        // FIXME: 2018/4/22 初始化视图
         // start paint
         EventQueue.invokeLater(() -> {
             frame = new AlgoFrame("Welcome", sceneWidth, sceneHeight);
+            // FIXME: 2018/4/22 在这里增加监听器
             //add  Listeners
             frame.addMouseListener(new algoMouseListener());
             frame.addKeyListener(new AlgoKeyListener());
@@ -55,8 +59,11 @@ public final class AlgoVisualizer {
 
     /**
      * Animation logic. 动画逻辑
+     *
      */
+    @SuppressWarnings("InfiniteLoopStatement")
     private void run() {
+        // FIXME: 2018/4/22 动画逻辑
         while (true) {
             // draw circle
             frame.render(circles);

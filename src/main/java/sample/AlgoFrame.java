@@ -78,6 +78,7 @@ public final class AlgoFrame extends JFrame {
             RenderingHints hints = new RenderingHints(KEY_ANTIALIASING, VALUE_ANTIALIAS_ON);
             g2d.addRenderingHints(hints);
 
+            // FIXME: 2018/4/22 在这里定义自己的绘制
             // 绘制图形
             setStrokeWitdh(g2d, 1);
             setColor(g2d, Color.pink);
