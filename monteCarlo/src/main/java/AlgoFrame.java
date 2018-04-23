@@ -85,7 +85,8 @@ public final class AlgoFrame extends JFrame {
             setColor(g2d, Color.cyan);
             strokeCircle(g2d, circle.getX(), circle.getY(), circle.getR());
 
-            for (Point point : points) {
+            for (int i = 0; i < points.size(); i++) {
+                Point point = points.get(i);
                 if (circle.contain(point)) {
                     setColor(g2d, Color.GREEN);
                 } else {

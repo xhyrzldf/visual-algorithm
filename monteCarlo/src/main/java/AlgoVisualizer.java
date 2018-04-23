@@ -1,4 +1,3 @@
-
 import utils.AlgoVisHelper;
 
 import java.awt.*;
@@ -20,13 +19,15 @@ public final class AlgoVisualizer {
     private Circle circle;
     private LinkedList<Point> points;
     private int N;
+    private int insideCircle = 0;
+
 
     //画布 视图
     private AlgoFrame frame;
 
     public AlgoVisualizer(int sceneWidth, int sceneHeight, int N) {
 
-        if (sceneHeight!=sceneWidth) {
+        if (sceneHeight != sceneWidth) {
             throw new IllegalArgumentException("width must equal height!");
         }
 
@@ -53,8 +54,15 @@ public final class AlgoVisualizer {
     private void run() {
         // FIXME: 2018/4/22 动画逻辑
         for (int i = 0; i < N; i++) {
-            frame.render(circle,points);
-            AlgoVisHelper.pause(5);
+            if (i % 100 == 0) {
+                frame.render(circle, points);
+                AlgoVisHelper.pause(20);
+
+                int circleArea = insideCircle;
+                int squareArea = points.size();
+                double pi = 4 * (double) circleArea / squareArea;
+                System.out.printf("pi's estimated value is %f %n", pi);
+            }
 
             Random rand = new Random();
             int x = rand.nextInt(frame.getCanvasWidth());
@@ -62,6 +70,9 @@ public final class AlgoVisualizer {
 
             Point p = new Point(x, y);
             points.add(p);
+            if (circle.contain(p)) {
+                insideCircle++;
+            }
 
         }
     }
@@ -71,7 +82,7 @@ public final class AlgoVisualizer {
 
         int sceneWidth = 800;
         int sceneHeight = 800;
-        int N = 10000;
+        int N = 100000;
 
         AlgoVisualizer visualizer = new AlgoVisualizer(sceneWidth, sceneHeight, N);
     }
