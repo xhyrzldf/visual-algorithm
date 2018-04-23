@@ -59,7 +59,6 @@ public final class AlgoVisualizer {
 
     /**
      * Animation logic. 动画逻辑
-     *
      */
     @SuppressWarnings("InfiniteLoopStatement")
     private void run() {
